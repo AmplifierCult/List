@@ -16,11 +16,20 @@ public class Main {
 
 
         System.out.println(list);
-        System.out.println("Размер списка " + list.size());
+        System.out.println("Size list of LinkedList = " + list.size());
 
         list.remove(3);
 
         System.out.println(list);
-        System.out.println("Размер списка " + list.size());
+        System.out.println("Size list of LinkedList = " + list.size());
+
+        MyArrayList <String> list2 = new MyArrayList<>();
+        list2.addItem("one");
+        list2.addItem("two");
+        list2.addItem("three");
+        System.out.println("Size list of ArrayList = " + list2.size());
+        System.out.println(list2.get(2));
+
+
     }
 }

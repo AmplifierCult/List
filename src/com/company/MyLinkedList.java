@@ -3,7 +3,7 @@ package com.company;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E> implements Iterable<E> {
+public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
     private Node first;
     private Node last;
     private int pointer;
@@ -14,7 +14,7 @@ public class MyLinkedList<E> implements Iterable<E> {
         last = null;
         pointer = 0;
     }
-
+    @Override
     public void addItem (E e){
         if (e == null) {
             throw new NullPointerException("This item is null.");
@@ -33,10 +33,22 @@ public class MyLinkedList<E> implements Iterable<E> {
         }
         pointer++;
     }
+
+    @Override
+    public E get(int n) {
+        return null;
+    }
+
+    @Override
+    public void addItem(int n, E e) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int size() {
         return pointer;
     }
-
+    @Override
     public void remove (E e) {
         if (pointer == 0) {
             throw new IllegalStateException("Cannot remove from and empty list.");
