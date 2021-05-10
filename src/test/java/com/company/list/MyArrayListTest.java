@@ -1,10 +1,12 @@
 package com.company.list;
 
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class MyArrayListTest {
 
-    @org.junit.Test
+    @Test
     public void addItem() {
         MyLinkedList <Object> list = new MyLinkedList<>();
         list.addItem("first");
@@ -19,19 +21,19 @@ public class MyArrayListTest {
         assertEquals(expected, actual);
     }
 
-    @org.junit.Test
+    @Test
     public void size() {
     }
 
-    @org.junit.Test
+    @Test
     public void remove() {
     }
 
-    @org.junit.Test
+    @Test
     public void get() {
     }
 
-    @org.junit.Test
+    @Test
     public void removeByIndex() {
     }
 }

@@ -22,7 +22,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
-            <scope>compile</scope> <!-- FIXME Перенести в test -->
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
