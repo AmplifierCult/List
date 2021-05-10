@@ -15,7 +15,7 @@ public class MyArrayList<E> implements MyListInterface<E> {
     public void addItem(E e) {
         try {
             E[] temp = item;
-            item = (E[]) new Object[temp.length + 1];
+            item = (E[]) new Object[temp.length * 2 + 1];
             System.arraycopy(temp, 0, item, 0, temp.length);
             item[item.length - 1] = e;
         } catch (ClassCastException ex) {
@@ -41,5 +41,10 @@ public class MyArrayList<E> implements MyListInterface<E> {
     @Override
     public E get(int n) {
         return item [n];
+    }
+
+    @Override
+    public void removeByIndex (int n) {
+        item[n] = null;
     }
 }

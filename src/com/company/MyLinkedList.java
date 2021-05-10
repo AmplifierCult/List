@@ -8,12 +8,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
     private Node last;
     private int pointer;
 
-
-    public MyLinkedList() {
-        first = null;
-        last = null;
-        pointer = 0;
-    }
     @Override
     public void addItem (E e){
         if (e == null) {
@@ -32,11 +26,17 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
             last = item;
         }
         pointer++;
+
     }
 
     @Override
     public E get(int n) {
         return null;
+    }
+
+    @Override
+    public void removeByIndex (int n) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -48,6 +48,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
     public int size() {
         return pointer;
     }
+
     @Override
     public void remove (E e) {
         if (pointer == 0) {
@@ -70,12 +71,15 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
                     last = prev; last.next = null;
                 }
                 // remove element
-                else { prev.next = curr.next; }
+                else {
+                    prev.next = curr.next;
+                }
                 pointer--;
                 break;
             }
             prev = curr;
             curr = prev.next;
+
         }
     }
 
@@ -87,8 +91,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
         private final E item;
 
         public Node(E item) {
-            previous = null;
-            next = null;
             this.item = item;
         }
 

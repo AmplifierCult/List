@@ -6,4 +6,5 @@ public interface MyListInterface<E> {
     int size();
     void remove (E e);
     E get (int n);
+    void removeByIndex (int n);
 }
