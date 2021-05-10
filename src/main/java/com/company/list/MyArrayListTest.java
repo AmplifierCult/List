@@ -1,4 +1,4 @@
-package com.company;
+package com.company.list;
 
 import static org.junit.Assert.*;
 

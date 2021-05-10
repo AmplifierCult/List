@@ -1,4 +1,4 @@
-package com.company;
+package com.company.list;
 
 public interface MyListInterface<E> {
     void addItem(E e);

@@ -1,4 +1,4 @@
-package com.company;
+package com.company.list;
 
 public class MyArrayList<E> implements MyListInterface<E> {
 
