@@ -3,63 +3,87 @@ package com.company.list;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
+public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     private Node first;
     private Node last;
-    private int pointer;
+
+    /**
+     * Текущий размер списка.
+     */
+    private int size;
 
     @Override
-    public void addItem (E e){
+    public void addItem(E e){
+        // FIXME Почему нельзя добавить null?
         if (e == null) {
             throw new NullPointerException("This item is null.");
         }
         Node item = new Node(e);
 
-        if (pointer != 0){
+        if (size != 0) { // Добавление второго и последующих элементов в список.
             last.next = item;
             item.previous = last;
             last = item;
             item.next = null;
-        }
-        else {
+        } else { // Добавление первого элемента в список.
             first = item;
             last = item;
         }
-        pointer++;
+
+        size++;
 
     }
 
     @Override
     public E get(int n) {
+        // TODO Реализовать! Проход с помощью while с счетчиком.
+        if (n < 0 || n > size-1) {
+            throw new IndexOutOfBoundsException("Unsupported list position.");
+        }
+
+        Node current = first;
+        int currentIteration = 0;
+        while (currentIteration <= n) {
+            if(currentIteration == n) {
+                return current.item;
+            }
+
+            currentIteration++;
+            current = current.next;
+        }
+
         return null;
     }
 
     @Override
     public void removeByIndex (int n) {
+        // TODO Реализовать.
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void addItem(int n, E e) {
+        // TODO Реализовать. Получить по индексу, затем вставить новый элемент.
         throw new UnsupportedOperationException();
     }
 
     @Override
     public int size() {
-        return pointer;
+        return size;
     }
 
     @Override
     public void remove (E e) {
-        if (pointer == 0) {
+        if (size == 0) {
             throw new IllegalStateException("Cannot remove from and empty list.");
         }
+
         Node prev = first;
         Node curr = first;
-        while (curr.next != null || curr == last) {
-            if (curr.item.equals(e)) {
+        while (curr.next != null || curr == last) { // TODO Попробовать убрать curr == lats. Кажется не нужным условием.
+            if (curr.item.equals(e)) { // FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
                 // remove the last remaining element
-                if (pointer == 1) {
+                if (size == 1) {
                     first = null; last = null;
                 }
                 // remove first element
@@ -74,7 +98,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
                 else {
                     prev.next = curr.next;
                 }
-                pointer--;
+                size--;
                 break;
             }
             prev = curr;
@@ -83,17 +107,17 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
         }
     }
 
-
-
+    /**
+     * Описание элемента списка.
+     */
     private class Node {
-        private Node previous;
-        private Node next;
         private final E item;
+        private Node next;
+        private Node previous;
 
         public Node(E item) {
             this.item = item;
         }
-
     }
 
     public Iterator<E> iterator() {
@@ -102,7 +126,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
 
     private class LinkedListIterator implements Iterator<E> {
         private Node current = first;
-
 
         public E next() {
             if (!hasNext()) {
@@ -119,9 +142,14 @@ public class MyLinkedList<E> implements Iterable<E>, MyListInterface<E> {
             throw new UnsupportedOperationException();
         }
     }
-    @Override public String toString() {
+
+    // TODO equals and hashcode.
+
+    @Override
+    public String toString() {
+        // TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
         StringBuilder s = new StringBuilder();
-        for (E item : this)
+        for (E item : this) // TODO Через while.
             s.append(item).append(" ");
         return s.toString();
     }

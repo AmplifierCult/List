@@ -1,6 +1,6 @@
 package com.company.list;
 
-public interface MyListInterface<E> {
+public interface MyList<E> {
     void addItem(E e);
     void addItem(int n, E e);
     int size();
