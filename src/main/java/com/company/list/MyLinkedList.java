@@ -14,7 +14,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public void addItem(E e){
-        // FIXME Почему нельзя добавить null?
+        //FIXME Почему нельзя добавить null?
         if (e == null) {
             throw new NullPointerException("This item is null.");
         }
@@ -36,7 +36,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public E get(int n) {
-        // TODO Реализовать! Проход с помощью while с счетчиком.
+        //TODO Реализовать! Проход с помощью while с счетчиком.
         if (n < 0 || n > size-1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
@@ -57,13 +57,13 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public void removeByIndex (int n) {
-        // TODO Реализовать.
+        //TODO Реализовать.
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void addItem(int n, E e) {
-        // TODO Реализовать. Получить по индексу, затем вставить новый элемент.
+        //TODO Реализовать. Получить по индексу, затем вставить новый элемент.
         throw new UnsupportedOperationException();
     }
 
@@ -80,8 +80,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
         Node prev = first;
         Node curr = first;
-        while (curr.next != null || curr == last) { // TODO Попробовать убрать curr == lats. Кажется не нужным условием.
-            if (curr.item.equals(e)) { // FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
+        while (curr.next != null || curr == last) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
+            if (curr.item.equals(e)) { //FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
                 // remove the last remaining element
                 if (size == 1) {
                     first = null; last = null;
@@ -143,11 +143,11 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         }
     }
 
-    // TODO equals and hashcode.
+    //TODO equals and hashcode.
 
     @Override
     public String toString() {
-        // TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
+        //TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
         StringBuilder s = new StringBuilder();
         for (E item : this) // TODO Через while.
             s.append(item).append(" ");
