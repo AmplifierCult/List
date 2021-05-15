@@ -25,7 +25,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод addItem добавляет последний элемент списка.
      */
     @Override
-    public void addItem(E e){
+    public void addItem(E e) {
         Node newItem = new Node(e);
 
         //Добавление второго и последующих элементов в список.
@@ -35,7 +35,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
             last = newItem;
             newItem.next = null;
 
-        //Добавление первого элемента в список.
+            //Добавление первого элемента в список.
         } else {
             first = newItem;
             last = newItem;
@@ -49,14 +49,14 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public E get(int n) {
-        if (n < 0 || n > size-1) {
+        if (n < 0 || n > size - 1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
 
         Node curr = first;
         int currentIteration = 0;
         while (currentIteration <= n) {
-            if(currentIteration == n) {
+            if (currentIteration == n) {
                 return curr.item;
             }
 
@@ -71,17 +71,18 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод removeByIndex удаляет элемент списка по индексу.
      */
     @Override
-    public void removeByIndex (int n) {
-        if (n < 0 || n > size-1) {
+    public void removeByIndex(int n) {
+        if (n < 0 || n > size - 1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
         Node curr = first;
         Node prev = first;
         int currentIteration = 0;
         while (currentIteration <= n) {
-            if(currentIteration == n) {
+            if (currentIteration == n) {
                 if (size == 1) {
-                    first = null; last = null;
+                    first = null;
+                    last = null;
                 }
 
                 //remove first element
@@ -91,7 +92,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
                 //remove last element
                 else if (curr.equals(last)) {
-                    last = prev; last.next = null;
+                    last = prev;
+                    last.next = null;
                 }
 
                 //remove element
@@ -114,7 +116,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     public void addItemByIndex(int n, E e) {
         //TODO Реализовать. Получить по индексу, затем вставить новый элемент.
 
-        if (n < 0 || n > size-1) {
+        if (n < 0 || n > size - 1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
         Node newItem = new Node(e);
@@ -122,9 +124,10 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         Node prev = first;
         int currentIteration = 0;
         while (currentIteration <= n) {
-            if(currentIteration == n) {
+            if (currentIteration == n) {
                 if (size == 1) { // TODO некорректная работа, написать тест.
-                    first = newItem; last = newItem;
+                    first = newItem;
+                    last = newItem;
                 }
 
                 //add first element
@@ -134,7 +137,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
                 }
 
                 //add last element
-                else if (n == size-1) {
+                else if (n == size - 1) {
                     last = newItem;
                     prev.next = newItem;
                     newItem.previous = prev;
@@ -158,8 +161,21 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public int indexOf(E element) {
-        //TODO реализовать!
-        return 0;
+        int index = 0;
+        Node curr = first;
+        while (curr != null) {
+
+            if (curr.item == null && element == null) {
+                return index;
+            }
+
+            if (curr.item != null && curr.item.equals(element)) {
+                return index;
+            }
+            index++;
+            curr = curr.next;
+        }
+        return -1;
     }
 
     /**
@@ -188,7 +204,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
                 //remove the last remaining element
                 if (size == 1) {
-                    first = null; last = null;
+                    first = null;
+                    last = null;
                 }
 
                 //remove first element
@@ -198,7 +215,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
                 //remove last element
                 else if (last.item == null || curr.equals(last)) {
-                    last = prev; last.next = null;
+                    last = prev;
+                    last.next = null;
                 }
 
                 //remove element
@@ -242,7 +260,9 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
             return item;
         }
 
-        public boolean hasNext() { return current != null; }
+        public boolean hasNext() {
+            return current != null;
+        }
 
         public void remove() {
             throw new UnsupportedOperationException();

@@ -20,7 +20,7 @@ public class MyListTest {
 
     @Test
     public void addItem() {
-        MyLinkedList <Object> list = new MyLinkedList<>();
+        MyLinkedList<Object> list = new MyLinkedList<>();
         list.addItem("first");
         list.addItem("second");
         list.addItem(3);
@@ -81,5 +81,129 @@ public class MyListTest {
 
         assertEquals(1, numberList.size());
         assertEquals(2, numberList.get(0));
+    }
+
+    @Test
+    public void indexOfWhenListIsEmpty() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+
+        //When
+        int actual = numberList.indexOf(0);
+
+        //Then
+        assertEquals(-1, actual);
+    }
+
+    @Test
+    public void indexOfWhenFirstElement() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(2);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(1);
+
+        //Then
+        assertEquals(0, actual);
+    }
+
+    @Test
+    public void indexOfWhenFirstOfEqualitySequenceElements() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(2);
+        numberList.addItem(2);
+        numberList.addItem(2);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(2);
+
+        //Then
+        assertEquals(1, actual);
+    }
+
+    @Test
+    public void indexOfWhenLastElement() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(2);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(3);
+
+        //Then
+        assertEquals(2, actual);
+    }
+
+    @Test
+    public void indexOfWhenPreLastElement() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(2);
+        numberList.addItem(32);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(32);
+
+        //Then
+        assertEquals(2, actual);
+    }
+
+    @Test
+    public void indexOfWhenOneElementNull() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(null);
+        numberList.addItem(32);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(null);
+
+        //Then
+        assertEquals(1, actual);
+    }
+
+    @Test
+    public void indexOfWhenSearchInListWithNull() {
+
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(null);
+        numberList.addItem(32);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(3);
+
+        //Then
+        assertEquals(3, actual);
+    }
+
+    @Test
+    public void indexOfSearchInListWithoutNull() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(1);
+        numberList.addItem(45);
+        numberList.addItem(32);
+        numberList.addItem(3);
+
+        //When
+        int actual = numberList.indexOf(null);
+
+        //Then
+        assertEquals(-1, actual);
     }
 }
