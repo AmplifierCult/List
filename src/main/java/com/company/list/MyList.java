@@ -7,4 +7,5 @@ public interface MyList<E> {
     void remove(E e);
     E get(int n);
     void removeByIndex(int n);
+    int indexOf(E element);
 }

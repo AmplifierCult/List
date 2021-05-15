@@ -36,6 +36,12 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     @Override
+    public int indexOf(E element) {
+        //TODO Реализовать!
+        return 0;
+    }
+
+    @Override
     public E get(int n) {
         return item [n];
     }

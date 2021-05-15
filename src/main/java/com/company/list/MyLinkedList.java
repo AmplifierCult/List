@@ -26,12 +26,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void addItem(E e){
-        //FIXME Почему нельзя добавить null?
-        /*LinkedList может создавать очередь из любых (в том числе и null) элементов.
-          if (e == null) {
-            throw new NullPointerException("This item is null.");
-        }*/
-
         Node newItem = new Node(e);
 
         //Добавление второго и последующих элементов в список.
@@ -55,7 +49,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public E get(int n) {
-        //TODO Реализовать! Проход с помощью while с счетчиком.
         if (n < 0 || n > size-1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
@@ -79,7 +72,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void removeByIndex (int n) {
-        //TODO Реализовать.
         if (n < 0 || n > size-1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
@@ -116,7 +108,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     }
 
     /**
-     * Метод addItemByIndex добавляет следующий элемент списка по индексу.
+     * Метод добавляет следующий элемент списка по индексу.
      */
     @Override
     public void addItemByIndex(int n, E e) {
@@ -131,7 +123,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         int currentIteration = 0;
         while (currentIteration <= n) {
             if(currentIteration == n) {
-                if (size == 1) {
+                if (size == 1) { // TODO некорректная работа, написать тест.
                     first = newItem; last = newItem;
                 }
 
@@ -162,6 +154,12 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
             prev = curr;
             curr = prev.next;
         }
+    }
+
+    @Override
+    public int indexOf(E element) {
+        //TODO реализовать!
+        return 0;
     }
 
     /**
@@ -254,7 +252,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     //TODO equals and hashcode.
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // FIXME Не подходит, требуется проходить по всем элементам.
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MyLinkedList<?> that = (MyLinkedList<?>) o;
@@ -263,7 +261,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, last, size);
+        return Objects.hash(first, last, size); // FIXME Не подходит, не учитывает большинство элементов в списке.
     }
 
     @Override
