@@ -19,7 +19,7 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     @Override
-    public void addItem(int n, E e) {
+    public void addItemByIndex(int n, E e) {
         //FIXME Перетираешь элемент, а не добавляешь.
         item[n] = e;
     }
