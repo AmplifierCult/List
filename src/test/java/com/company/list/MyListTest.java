@@ -206,4 +206,48 @@ public class MyListTest {
         //Then
         assertEquals(-1, actual);
     }
+
+    @Test
+    public void addItemByIndexWhenListSizeOne() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(45);
+
+        //When
+        numberList.addItemByIndex(0,42);
+        int actual = numberList.size();
+
+        //Then
+        assertEquals(2, actual);
+    }
+
+    @Test
+    public void addItemByIndexWhenListEmpty() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+
+        //When
+        numberList.addItemByIndex(0,42);
+        int actual = numberList.size();
+
+        //Then
+        assertEquals(1, actual);
+    }
+
+    @Test
+    public void addItemByIndex() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(45);
+        numberList.addItem(5);
+        numberList.addItem(23);
+        numberList.addItem(41);
+
+        //When
+        numberList.addItemByIndex(3,42);
+        int actual = numberList.size();
+
+        //Then
+        assertEquals(5, actual);
+    }
 }

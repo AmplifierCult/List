@@ -72,9 +72,14 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void removeByIndex(int n) {
-        if (n < 0 || n > size - 1) {
+        if (size == 0) {
+            throw new IllegalStateException("List is empty");
+        }
+
+        if (n < 0 || n > size) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
+
         Node curr = first;
         Node prev = first;
         int currentIteration = 0;
@@ -116,7 +121,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     public void addItemByIndex(int n, E e) {
         //TODO Реализовать. Получить по индексу, затем вставить новый элемент.
 
-        if (n < 0 || n > size - 1) {
+        if (n < 0 || n > size) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
         Node newItem = new Node(e);
@@ -125,7 +130,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         int currentIteration = 0;
         while (currentIteration <= n) {
             if (currentIteration == n) {
-                if (size == 1) { // TODO некорректная работа, написать тест.
+
+                if (size == 0) { // TODO некорректная работа, написать тест.
                     first = newItem;
                     last = newItem;
                 }
@@ -137,7 +143,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
                 }
 
                 //add last element
-                else if (n == size - 1) {
+                else if (n == size) {
                     last = newItem;
                     prev.next = newItem;
                     newItem.previous = prev;
@@ -197,8 +203,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
         Node prev = first;
         Node curr = first;
-        while (curr.next != null || curr == last) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
-            //Нельзя убрать curr == last т.к. список может состоять полностью из null или иметь подряд несколько элементов null.
+        while (curr.next != null) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
             if (curr.item == null || curr.item.equals(e)) { //FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
                 //null equals(null) возвращает NullPointerException
 
@@ -288,10 +293,38 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     public String toString() {
         //TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
         StringBuilder s = new StringBuilder();
-        for (E item : this) // TODO Через while.
+        /*for (E item : this) // TODO Через while.
             s.append(item).append(" ");
-        return s.toString();
+        return s.toString();*/
+        if (size ==0) {
+            s.append("Список пуст");
+        }
 
+        Node curr = first;
+        Node prev = first;
+        int currentIteration = 1;
+
+        if (size == 1) {
+            s.append("[").append(curr.item).append("]");
+        }
+        else {
+            s.append("[");
+            while (currentIteration <= size) {
+                if (curr != last){
+                    s.append(curr.item).append(", ");
+                }
+                else {
+                    s.append(curr.item);
+                }
+                currentIteration++;
+                prev = curr;
+                curr = prev.next;
+            }
+            s.append("]");
+        }
+
+
+        return s.toString();
     }
 
 }
