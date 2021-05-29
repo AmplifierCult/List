@@ -275,14 +275,14 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     //TODO equals and hashcode.
 
     @Override
-    public boolean equals(Object o) { // FIXME Не подходит, требуется проходить по всем элементам.
+    public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof List))
+        if (!(o instanceof List)) // TODO MyList
             return false;
 
-        Iterator<E> e1 = iterator();
-        Iterator<?> e2 = ((List<?>) o).listIterator();
+        Iterator<E> e1 = this.iterator();
+        Iterator<?> e2 = ((List<?>) o).listIterator(); // FIXME Для MyList нет этого метода.
         while (e1.hasNext() && e2.hasNext()) {
             E o1 = e1.next();
             Object o2 = e2.next();
@@ -298,23 +298,20 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         for (E e : this)
             hashCode = 31*hashCode + (e==null ? 0 : e.hashCode());
         return hashCode;
-        // FIXME Не подходит, не учитывает большинство элементов в списке.
     }
 
     @Override
     public String toString() {
-        //TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
         StringBuilder s = new StringBuilder();
-        // TODO Через while.
         if (size ==0) {
-            s.append("Список пуст");
+            s.append("Список пуст"); //  TODO это не специфичный случай []
         }
 
         Node curr = first;
         Node prev = first;
         int currentIteration = 1;
 
-        if (size == 1) {
+        if (size == 1) { // TODO Убрать специфичные случаи, и сделать все в общем.
             s.append("[").append(curr.item).append("]");
         }
         else {
