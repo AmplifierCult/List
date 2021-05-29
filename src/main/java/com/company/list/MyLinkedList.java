@@ -201,7 +201,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
         Node prev = first;
         Node curr = first;
-        while (curr.next != null) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
+        // В чем суть curr == last
+        while (curr.next != null || curr == last) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
             if (curr.item == null || curr.item.equals(e)) { //FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
                 //null equals(null) возвращает NullPointerException
 
