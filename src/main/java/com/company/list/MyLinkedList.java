@@ -1,8 +1,6 @@
 package com.company.list;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
@@ -278,24 +276,36 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
     @Override
     public boolean equals(Object o) { // FIXME Не подходит, требуется проходить по всем элементам.
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MyLinkedList<?> that = (MyLinkedList<?>) o;
-        return size == that.size && Objects.equals(first, that.first) && Objects.equals(last, that.last);
+        if (o == this)
+            return true;
+        if (!(o instanceof List))
+            return false;
+
+        Iterator<E> e1 = iterator();
+        Iterator<?> e2 = ((List<?>) o).listIterator();
+        while (e1.hasNext() && e2.hasNext()) {
+            E o1 = e1.next();
+            Object o2 = e2.next();
+            if (!(Objects.equals(o1, o2)))
+                return false;
+        }
+        return !(e1.hasNext() || e2.hasNext());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(first, last, size); // FIXME Не подходит, не учитывает большинство элементов в списке.
+        int hashCode = 1;
+        for (E e : this)
+            hashCode = 31*hashCode + (e==null ? 0 : e.hashCode());
+        return hashCode;
+        // FIXME Не подходит, не учитывает большинство элементов в списке.
     }
 
     @Override
     public String toString() {
         //TODO Сделать с другим паттерном. Обрамление - [], разделитель элементов - ','
         StringBuilder s = new StringBuilder();
-        /*for (E item : this) // TODO Через while.
-            s.append(item).append(" ");
-        return s.toString();*/
+        // TODO Через while.
         if (size ==0) {
             s.append("Список пуст");
         }

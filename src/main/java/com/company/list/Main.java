@@ -21,6 +21,19 @@ public class Main {
         list.addItem("sixth");
         list.addItem("seventh");
         System.out.println(list);
+        System.out.println(list.hashCode());
 
+
+        MyLinkedList <Object> list2 = new MyLinkedList<>();
+        list2.addItem("first");
+        list2.addItem("second");
+        list2.addItem(3);
+        list2.addItem("fourth");
+        list2.addItem(5);
+        list2.addItem("sixth");
+        list2.addItem("seventh");
+        System.out.println(list2);
+        System.out.println(list2.hashCode());
+        System.out.println(list2.equals(list));
     }
 }
