@@ -35,5 +35,9 @@ public class Main {
         System.out.println(list2);
         System.out.println(list2.hashCode());
         System.out.println(list2.equals(list));
+
+
+        MyLinkedList <Object> list3 = new MyLinkedList<>();
+        System.out.println(list3);
     }
 }

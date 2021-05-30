@@ -244,4 +244,46 @@ public class MyListTest {
         //Then
         assertEquals(5, actual);
     }
+
+    @Test
+    public void toStringListIsEmpty() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+
+        //When
+        String actual = numberList.toString();
+
+        //Then
+        assertEquals("[]", actual);
+    }
+
+    @Test
+    public void toStringListWithSingleItem() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(45);
+
+        //When
+        String actual = numberList.toString();
+        String expected = "[" + numberList.get(0) + "]";
+
+        //Then
+        assertEquals(expected, actual);
+    }
+    //toStringListWithSeveralItems
+    @Test
+    public void toStringListWithSeveralItems() {
+        //Given
+        MyList<Number> numberList = new MyLinkedList<>();
+        numberList.addItem(45);
+        numberList.addItem(5);
+        numberList.addItem(null);
+
+        //When
+        String actual = numberList.toString();
+        String expected = "[" + numberList.get(0) + ", " + numberList.get(1) + ", " + numberList.get(2) + "]";
+
+        //Then
+        assertEquals(expected, actual);
+    }
 }

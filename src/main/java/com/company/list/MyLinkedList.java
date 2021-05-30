@@ -273,17 +273,15 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         }
     }
 
-    //TODO equals and hashcode.
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof List)) // TODO MyList
+        if (!(o instanceof List))
             return false;
 
         Iterator<E> e1 = this.iterator();
-        Iterator<?> e2 = ((List<?>) o).listIterator(); // FIXME Для MyList нет этого метода.
+        Iterator<?> e2 = ((MyLinkedList<?>) o).iterator();
         while (e1.hasNext() && e2.hasNext()) {
             E o1 = e1.next();
             Object o2 = e2.next();
@@ -304,35 +302,23 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        if (size ==0) {
-            s.append("Список пуст"); //  TODO это не специфичный случай []
-        }
-
         Node curr = first;
-        Node prev = first;
+        Node prev;
+        s.append("[");
         int currentIteration = 1;
-
-        if (size == 1) { // TODO Убрать специфичные случаи, и сделать все в общем.
-            s.append("[").append(curr.item).append("]");
-        }
-        else {
-            s.append("[");
-            while (currentIteration <= size) {
-                if (curr != last){
-                    s.append(curr.item).append(", ");
-                }
-                else {
-                    s.append(curr.item);
-                }
-                currentIteration++;
-                prev = curr;
-                curr = prev.next;
+        while (currentIteration <= size) {
+            if (curr != last){
+                s.append(curr.item).append(", ");
             }
-            s.append("]");
+            else {
+                s.append(curr.item);
+            }
+            currentIteration++;
+            prev = curr;
+            curr = prev.next;
         }
-
+        s.append("]");
 
         return s.toString();
     }
-
 }
