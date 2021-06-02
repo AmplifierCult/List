@@ -191,7 +191,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     }
 
     /**
-     * Метод remove удаляет элемент по содержимому.
+     * Метод remove удаляет элемент по содержимому. Если в списке несколько одинаковых элементов, то удаляет первый по счету.
      */
     @Override
     public void remove(E e) {

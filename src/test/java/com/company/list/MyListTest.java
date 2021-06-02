@@ -6,15 +6,12 @@ import static org.junit.Assert.*;
 
 public class MyListTest {
 
-    //TODO Тесты.
-    // 1. toString list is empty -> []
-    // 2. toString list with single item -> [item]
-    // 3. toString list with several items -> [item1, item2, item3, ... item_n]
-
-
     @Test
     public void addItem() {
+        //Given
         MyLinkedList<Object> list = new MyLinkedList<>();
+
+        //When
         list.addItem("first");
         list.addItem("second");
         list.addItem(3);
@@ -22,57 +19,161 @@ public class MyListTest {
         list.addItem(5);
         list.addItem("sixth");
         list.addItem("seventh");
-        int actual = list.size();
-        int expected = 7;
-        assertEquals(expected, actual);
+
+        //Then
+        assertEquals(7, list.size());
+        assertEquals("seventh", list.get(6));
     }
 
     @Test
     public void size() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+
+        //When
+        list.addItem("first");
+        list.addItem("second");
+        list.addItem(3);
+
+        //Then
+        assertEquals(3, list.size());
+    }
+
+    @Test
+    public void sizeOfEmptyList() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+
+        //When
+        int actual = list.size();
+
+        //Then
+        assertEquals(0, actual);
+    }
+
+    @Test
+    public void sizeOfListWhenAllElementsIsNull() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem(null);
+        list.addItem(null);
+        list.addItem(null);
+
+        //When
+        int actual = list.size();
+
+        //Then
+        assertEquals(3, actual);
+    }
+
+    @Test
+    public void sizeOfListWhenSeveralElementsIsNull() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem(null);
+        list.addItem(2);
+        list.addItem(null);
+
+        //When
+        int actual = list.size();
+
+        //Then
+        assertEquals(3, actual);
     }
 
     @Test
     public void remove() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem("one");
+        list.addItem(2);
+        list.addItem(3);
+
+        //When
+        list.remove(2);
+
+        //Then
+        assertEquals(2, list.size());
+        assertEquals(3, list.get(1));
+    }
+
+    @Test
+    public void removeWhenListHaveEqualsElements() {
+        //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem("one");
+        list.addItem("one");
+        list.addItem(3);
+        list.addItem(2);
+        list.addItem(2);
+
+        //When
+        list.remove(2);
+
+        //Then
+        assertEquals(4, list.size());
+        assertEquals(3, list.get(2));
+        assertEquals(2, list.get(3));
     }
 
     @Test
     public void get() {
+        //Given
+
+        //When
+
+        //Then
     }
+
 
     @Test
     public void removeByIndex() {
+        //Given
+
+        //When
+
+        //Then
     }
 
     @Test
     public void deleteItemFromListSizeOne() {
+        //Given
         MyList<Number> numberList = new MyLinkedList<>();
         numberList.addItem(1);
 
+        //When
         numberList.remove(1);
 
+        //Then
         assertEquals(0, numberList.size());
     }
 
     @Test
     public void deleteLastItemFromListSizeTwo() {
+        //Given
         MyList<Number> numberList = new MyLinkedList<>();
         numberList.addItem(1);
         numberList.addItem(2);
 
+        //When
         numberList.remove(2);
 
+        //Then
         assertEquals(1, numberList.size());
         assertEquals(1, numberList.get(0));
     }
 
     @Test
     public void deleteFirstItemFromListSizeTwo() {
+        //Given
         MyList<Number> numberList = new MyLinkedList<>();
         numberList.addItem(1);
         numberList.addItem(2);
 
+        //When
         numberList.remove(1);
 
+        //Then
         assertEquals(1, numberList.size());
         assertEquals(2, numberList.get(0));
     }
@@ -213,6 +314,7 @@ public class MyListTest {
 
         //Then
         assertEquals(2, actual);
+        assertEquals(42, numberList.get(0));
     }
 
     @Test
@@ -226,6 +328,7 @@ public class MyListTest {
 
         //Then
         assertEquals(1, actual);
+        assertEquals(42, numberList.get(0));
     }
 
     @Test
@@ -243,6 +346,7 @@ public class MyListTest {
 
         //Then
         assertEquals(5, actual);
+        assertEquals(42, numberList.get(3));
     }
 
     @Test
@@ -270,7 +374,7 @@ public class MyListTest {
         //Then
         assertEquals(expected, actual);
     }
-    //toStringListWithSeveralItems
+
     @Test
     public void toStringListWithSeveralItems() {
         //Given
