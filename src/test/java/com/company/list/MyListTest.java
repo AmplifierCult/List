@@ -119,20 +119,34 @@ public class MyListTest {
     @Test
     public void get() {
         //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem("one");
+        list.addItem("two");
+        list.addItem(3);
 
         //When
+        Object actual = list.get(1);
 
         //Then
+        assertEquals("two", actual);
     }
-
 
     @Test
     public void removeByIndex() {
         //Given
+        MyLinkedList<Object> list = new MyLinkedList<>();
+        list.addItem("one");
+        list.addItem("two");
+        list.addItem(3);
+        list.addItem(4);
+        list.addItem(5);
 
         //When
+        list.removeByIndex(1);
 
         //Then
+        assertEquals(4, list.size());
+        assertEquals(3, list.get(1));
     }
 
     @Test
