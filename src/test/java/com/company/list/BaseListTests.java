@@ -4,12 +4,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MyListTest {
+public abstract class BaseListTests {
+
+    protected abstract <E> MyList<E> getEmptyList();
 
     @Test
     public void addItem() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
 
         //When
         list.addItem("first");
@@ -28,7 +30,7 @@ public class MyListTest {
     @Test
     public void size() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
 
         //When
         list.addItem("first");
@@ -42,7 +44,7 @@ public class MyListTest {
     @Test
     public void sizeOfEmptyList() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
 
         //When
         int actual = list.size();
@@ -54,7 +56,7 @@ public class MyListTest {
     @Test
     public void sizeOfListWhenAllElementsIsNull() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem(null);
         list.addItem(null);
         list.addItem(null);
@@ -69,7 +71,7 @@ public class MyListTest {
     @Test
     public void sizeOfListWhenSeveralElementsIsNull() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem(null);
         list.addItem(2);
         list.addItem(null);
@@ -84,7 +86,7 @@ public class MyListTest {
     @Test
     public void remove() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem("one");
         list.addItem(2);
         list.addItem(3);
@@ -100,7 +102,7 @@ public class MyListTest {
     @Test
     public void removeWhenListHaveEqualsElements() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem("one");
         list.addItem("one");
         list.addItem(3);
@@ -119,7 +121,7 @@ public class MyListTest {
     @Test
     public void get() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem("one");
         list.addItem("two");
         list.addItem(3);
@@ -134,7 +136,7 @@ public class MyListTest {
     @Test
     public void removeByIndex() {
         //Given
-        MyLinkedList<Object> list = new MyLinkedList<>();
+        MyList<Object> list = getEmptyList();
         list.addItem("one");
         list.addItem("two");
         list.addItem(3);
@@ -152,7 +154,7 @@ public class MyListTest {
     @Test
     public void deleteItemFromListSizeOne() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
 
         //When
@@ -165,7 +167,7 @@ public class MyListTest {
     @Test
     public void deleteLastItemFromListSizeTwo() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
 
@@ -180,7 +182,7 @@ public class MyListTest {
     @Test
     public void deleteFirstItemFromListSizeTwo() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
 
@@ -195,7 +197,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenListIsEmpty() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
 
         //When
         int actual = numberList.indexOf(0);
@@ -207,7 +209,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenFirstElement() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
         numberList.addItem(3);
@@ -222,7 +224,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenFirstOfEqualitySequenceElements() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
         numberList.addItem(2);
@@ -239,7 +241,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenLastElement() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
         numberList.addItem(3);
@@ -254,7 +256,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenPreLastElement() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(2);
         numberList.addItem(32);
@@ -270,7 +272,7 @@ public class MyListTest {
     @Test
     public void indexOfWhenOneElementNull() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(null);
         numberList.addItem(32);
@@ -287,7 +289,7 @@ public class MyListTest {
     public void indexOfWhenSearchInListWithNull() {
 
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(null);
         numberList.addItem(32);
@@ -303,7 +305,7 @@ public class MyListTest {
     @Test
     public void indexOfSearchInListWithoutNull() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(1);
         numberList.addItem(45);
         numberList.addItem(32);
@@ -319,7 +321,7 @@ public class MyListTest {
     @Test
     public void addItemByIndexWhenListSizeOne() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(45);
 
         //When
@@ -334,7 +336,7 @@ public class MyListTest {
     @Test
     public void addItemByIndexWhenListEmpty() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
 
         //When
         numberList.addItemByIndex(0,42);
@@ -348,7 +350,7 @@ public class MyListTest {
     @Test
     public void addItemByIndex() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(45);
         numberList.addItem(5);
         numberList.addItem(23);
@@ -366,7 +368,7 @@ public class MyListTest {
     @Test
     public void toStringListIsEmpty() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
 
         //When
         String actual = numberList.toString();
@@ -378,7 +380,7 @@ public class MyListTest {
     @Test
     public void toStringListWithSingleItem() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(45);
 
         //When
@@ -392,7 +394,7 @@ public class MyListTest {
     @Test
     public void toStringListWithSeveralItems() {
         //Given
-        MyList<Number> numberList = new MyLinkedList<>();
+        MyList<Number> numberList = getEmptyList();
         numberList.addItem(45);
         numberList.addItem(5);
         numberList.addItem(null);

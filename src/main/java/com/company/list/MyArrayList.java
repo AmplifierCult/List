@@ -42,14 +42,23 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public void remove(E elementData) {
-        //TODO
-        count--;
+        int resultIndexOf = indexOf(elementData);
+        if (resultIndexOf != -1) {
+            removeByIndex(resultIndexOf);
+        }
     }
 
     @Override
     public int indexOf(E elementData) {
-        //TODO Реализовать!
-        return 0;
+        for (int i = 0; i < size(); i++) {
+            if (item[i] == null && elementData == null) {
+                return i;
+            }
+            if (item[i] != null && item[i].equals(elementData)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -59,8 +68,24 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public void removeByIndex (int index) {
-        //TODO остается дырка в виде null.
-        item[index] = null;
+        System.arraycopy(item, index+1, item, index, item.length-index-1);
         count--;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("[");
+        for (int i = 0; i < size(); i++) {
+            if (i != (size()-1)){
+                s.append(item[i]).append(", ");
+            }
+            else {
+                s.append(item[i]);
+            }
+        }
+        s.append("]");
+
+        return s.toString();
     }
 }
