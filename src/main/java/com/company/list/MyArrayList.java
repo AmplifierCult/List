@@ -2,42 +2,52 @@ package com.company.list;
 
 public class MyArrayList<E> implements MyList<E> {
 
-    Object [] item;
-    int count;
+    private Object [] item;
+    private int size;
 
     public MyArrayList() {
         this.item = new Object[0];
     }
 
     public MyArrayList(int capacity) {
-        if (capacity >= 0 && capacity < Integer.MAX_VALUE) {
+        if (capacity >= 0) {
             this.item = new Object[capacity];
         } else {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
     }
 
+    private void increaseSize() {
+        Object [] temp = item;
+        item = new Object[temp.length * 2 + 1];
+        System.arraycopy(temp, 0, item, 0, temp.length);
+    }
+
     @Override
     public void addItem(E elementData) {
-        Object [] temp = item;
         if (item.length == size()){
-            item = new Object[temp.length * 2 + 1];
-            System.arraycopy(temp, 0, item, 0, temp.length);
+            increaseSize();
         }
         item[size()] = elementData;
-        count++;
+        size++;
     }
 
     @Override
     public void addItemByIndex(int index, E elementData) {
-        // TODO перетирается элемент
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Unsupported list position.");
+        }
+        if (item.length == size()){
+            increaseSize();
+        }
+        System.arraycopy(item, index, item, index+1, item.length-index-1);
         item[index] = elementData;
-        count++;
+        size++;
     }
 
     @Override
     public int size() {
-        return count;
+        return size;
     }
 
     @Override
@@ -63,13 +73,15 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public Object get(int index) {
+        validationIndex(index);
         return item [index];
     }
 
     @Override
     public void removeByIndex (int index) {
+        validationIndex(index);
         System.arraycopy(item, index+1, item, index, item.length-index-1);
-        count--;
+        size--;
     }
 
     @Override
@@ -85,7 +97,6 @@ public class MyArrayList<E> implements MyList<E> {
             }
         }
         s.append("]");
-
         return s.toString();
     }
 }

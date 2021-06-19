@@ -13,8 +13,12 @@ public class Main {
         list1.addItem("qwe");
         list1.addItem("qty");
         list1.addItem("qwy");
-        System.out.println("Size list of ArrayList = " + list1.size());
-        System.out.println("Size item of ArrayList = " + list1.item.length);
-
+        System.out.println(list1);
+        list1.removeByIndex(1);
+        list1.removeByIndex(-1);
+        list1.removeByIndex(0);
+        list1.removeByIndex(0);
+        System.out.println(list1);
+        list1.validationIndex(-1);
     }
 }

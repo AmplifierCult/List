@@ -23,11 +23,11 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод addItem добавляет последний элемент списка.
      */
     @Override
-    public void addItem(E e) {
-        Node newItem = new Node(e);
+    public void addItem(E elementData) {
+        Node newItem = new Node(elementData);
 
         //Добавление второго и последующих элементов в список.
-        if (size != 0) {
+        if (!isEmpty()) {
             last.next = newItem;
             newItem.previous = last;
             last = newItem;
@@ -46,21 +46,17 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод get возвращает элемент списка по индексу.
      */
     @Override
-    public Object get(int n) {
-        if (n < 0 || n > size - 1) {
-            throw new IndexOutOfBoundsException("Unsupported list position.");
-        }
-
-        Node curr = first;
+    public Object get(int index) {
+        validationIndex(index);
+        Node currentNode = first;
         int currentIteration = 0;
-        while (currentIteration <= n) {
-            if (currentIteration == n) {
-                return curr.item;
+        while (currentIteration <= index) {
+            if (currentIteration == index) {
+                return currentNode.item;
             }
             currentIteration++;
-            curr = curr.next;
+            currentNode = currentNode.next;
         }
-
         return null;
     }
 
@@ -68,114 +64,106 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод removeByIndex удаляет элемент списка по индексу.
      */
     @Override
-    public void removeByIndex(int n) {
-        if (size == 0) {
-            throw new IllegalStateException("List is empty");
-        }
-
-        if (n < 0 || n > size) {
-            throw new IndexOutOfBoundsException("Unsupported list position.");
-        }
-
-        Node curr = first;
-        Node prev = first;
+    public void removeByIndex(int index) {
+        validationIndex(index);
+        Node currentNode = first;
+        Node previousNode = first;
         int currentIteration = 0;
-        while (currentIteration <= n) {
-            if (currentIteration == n) {
-                if (size == 1) {
+        while (currentIteration <= index) {
+            if (currentIteration == index) {
+                if (size() == 1) {
                     first = null;
                     last = null;
                 }
 
                 //remove first element
-                else if (curr.equals(first)) {
+                else if (currentNode.equals(first)) {
                     first = first.next;
                 }
 
                 //remove last element
-                else if (curr.equals(last)) {
-                    last = prev;
+                else if (currentNode.equals(last)) {
+                    last = previousNode;
                     last.next = null;
                 }
 
                 //remove element
                 else {
-                    prev.next = curr.next;
+                    previousNode.next = currentNode.next;
                 }
                 size--;
                 break;
             }
             currentIteration++;
-            prev = curr;
-            curr = prev.next;
+            previousNode = currentNode;
+            currentNode = previousNode.next;
         }
     }
 
     /**
-     * Метод добавляет следующий элемент списка по индексу.
+     * Метод добавляет элемент списка по индексу.
      */
     @Override
-    public void addItemByIndex(int n, E e) {
-
-        if (n < 0 || n > size) {
+    public void addItemByIndex(int index, E elementData) {
+        if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
-        Node newItem = new Node(e);
-        Node curr = first;
-        Node prev = first;
+        Node newItem = new Node(elementData);
+        Node currentNode = first;
+        Node previousNode = first;
         int currentIteration = 0;
-        while (currentIteration <= n) {
-            if (currentIteration == n) {
+        while (currentIteration <= index) {
+            if (currentIteration == index) {
 
-                if (size == 0) {
+                if (isEmpty()) {
                     first = newItem;
                     last = newItem;
                 }
 
                 //add first element
-                else if (n == 0) {
+                else if (index == 0) {
                     first = newItem;
-                    curr.previous = first;
+                    currentNode.previous = first;
                 }
 
                 //add last element
-                else if (n == size) {
+                else if (index == size()) {
                     last = newItem;
-                    prev.next = newItem;
-                    newItem.previous = prev;
+                    previousNode.next = newItem;
+                    newItem.previous = previousNode;
                 }
 
                 //add element
                 else {
-                    prev.next = newItem;
-                    newItem.previous = prev;
-                    curr.previous = newItem;
-                    newItem.next = curr;
+                    previousNode.next = newItem;
+                    newItem.previous = previousNode;
+                    currentNode.previous = newItem;
+                    newItem.next = currentNode;
                 }
                 size++;
                 break;
             }
             currentIteration++;
-            prev = curr;
-            curr = prev.next;
+            previousNode = currentNode;
+            currentNode = previousNode.next;
         }
     }
 
     @Override
-    public int indexOf(E element) {
+    public int indexOf(E elementData) {
         int index = 0;
-        Node curr = first;
-        while (curr != null) {
+        Node currentNode = first;
+        while (currentNode != null) {
 
-            if (curr.item == null && element == null) {
+            if (currentNode.item == null && elementData == null) {
                 return index;
             }
 
-            if (curr.item != null && curr.item.equals(element)) {
+            if (currentNode.item != null && currentNode.item.equals(elementData)) {
                 return index;
             }
             index++;
-            curr = curr.next;
+            currentNode = currentNode.next;
         }
         return -1;
     }
@@ -192,42 +180,42 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод remove удаляет элемент по содержимому. Если в списке несколько одинаковых элементов, то удаляет первый по счету.
      */
     @Override
-    public void remove(E e) {
-        if (size == 0) {
-            throw new IllegalStateException("Cannot remove from and empty list.");
+    public void remove(E elementData) {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot remove from empty list.");
         }
 
-        Node prev = first;
-        Node curr = first;
-        while (curr.next != null || curr == last) {
-            if (curr.item == null || curr.item.equals(e)) {
+        Node previousNode = first;
+        Node currentNode = first;
+        while (currentNode.next != null || currentNode == last) {
+            if (currentNode.item == null || currentNode.item.equals(elementData)) {
 
                 //remove the last remaining element
-                if (size == 1) {
+                if (size() == 1) {
                     first = null;
                     last = null;
                 }
 
                 //remove first element
-                else if (first.item == null || curr.equals(first)) {
+                else if (first.item == null || currentNode.equals(first)) {
                     first = first.next;
                 }
 
                 //remove last element
-                else if (last.item == null || curr.equals(last)) {
-                    last = prev;
+                else if (last.item == null || currentNode.equals(last)) {
+                    last = previousNode;
                     last.next = null;
                 }
 
                 //remove element
                 else {
-                    prev.next = curr.next;
+                    previousNode.next = currentNode.next;
                 }
                 size--;
                 break;
             }
-            prev = curr;
-            curr = prev.next;
+            previousNode = currentNode;
+            currentNode = previousNode.next;
         }
     }
 
@@ -275,7 +263,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
             return true;
         if (!(o instanceof List))
             return false;
-
         Iterator<E> e1 = this.iterator();
         Iterator<?> e2 = ((MyLinkedList<?>) o).iterator();
         while (e1.hasNext() && e2.hasNext()) {
@@ -298,20 +285,20 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        Node curr = first;
-        Node prev;
+        Node currentNode = first;
+        Node previousNode;
         s.append("[");
         int currentIteration = 1;
-        while (currentIteration <= size) {
-            if (curr != last){
-                s.append(curr.item).append(", ");
+        while (currentIteration <= size()) {
+            if (currentNode != last){
+                s.append(currentNode.item).append(", ");
             }
             else {
-                s.append(curr.item);
+                s.append(currentNode.item);
             }
             currentIteration++;
-            prev = curr;
-            curr = prev.next;
+            previousNode = currentNode;
+            currentNode = previousNode.next;
         }
         s.append("]");
 
