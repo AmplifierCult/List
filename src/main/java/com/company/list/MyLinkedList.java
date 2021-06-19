@@ -46,7 +46,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      * Метод get возвращает элемент списка по индексу.
      */
     @Override
-    public E get(int n) {
+    public Object get(int n) {
         if (n < 0 || n > size - 1) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
         }
@@ -57,7 +57,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
             if (currentIteration == n) {
                 return curr.item;
             }
-
             currentIteration++;
             curr = curr.next;
         }
@@ -117,7 +116,6 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void addItemByIndex(int n, E e) {
-        //TODO Реализовать. Получить по индексу, затем вставить новый элемент.
 
         if (n < 0 || n > size) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
@@ -129,7 +127,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
         while (currentIteration <= n) {
             if (currentIteration == n) {
 
-                if (size == 0) { // TODO некорректная работа, написать тест.
+                if (size == 0) {
                     first = newItem;
                     last = newItem;
                 }
@@ -201,10 +199,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
 
         Node prev = first;
         Node curr = first;
-        // В чем суть curr == last
-        while (curr.next != null || curr == last) { //TODO Попробовать убрать curr == last. Кажется не нужным условием.
-            if (curr.item == null || curr.item.equals(e)) { //FIXME Если список будет поддерживать null в себе, то тут может быть ошибка.
-                //null equals(null) возвращает NullPointerException
+        while (curr.next != null || curr == last) {
+            if (curr.item == null || curr.item.equals(e)) {
 
                 //remove the last remaining element
                 if (size == 1) {

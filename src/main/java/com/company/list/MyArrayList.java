@@ -2,53 +2,65 @@ package com.company.list;
 
 public class MyArrayList<E> implements MyList<E> {
 
-    E[] item;
+    Object [] item;
+    int count;
 
     public MyArrayList() {
-        //TODO Сделать отдельный конструктор с заданным размером.
-        this.item = (E[]) new Object[0];
+        this.item = new Object[0];
+    }
+
+    public MyArrayList(int capacity) {
+        if (capacity >= 0 && capacity < Integer.MAX_VALUE) {
+            this.item = new Object[capacity];
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
+        }
     }
 
     @Override
-    public void addItem(E e) {
-        E[] temp = item;
-        //FIXME Увеличиваешь размер массива при каждом добавлении, требуется проверка на достижение предельного размера
-        item = (E[]) new Object[temp.length * 2 + 1];
-        System.arraycopy(temp, 0, item, 0, temp.length);
-        item[item.length - 1] = e;
+    public void addItem(E elementData) {
+        Object [] temp = item;
+        if (item.length == size()){
+            item = new Object[temp.length * 2 + 1];
+            System.arraycopy(temp, 0, item, 0, temp.length);
+        }
+        item[size()] = elementData;
+        count++;
     }
 
     @Override
-    public void addItemByIndex(int n, E e) {
-        //FIXME Перетираешь элемент, а не добавляешь.
-        item[n] = e;
+    public void addItemByIndex(int index, E elementData) {
+        // TODO перетирается элемент
+        item[index] = elementData;
+        count++;
     }
 
     @Override
     public int size() {
-        //FIXME Это размер массива, а не количество элементов в списке.
-        return item.length;
+        return count;
     }
 
     @Override
-    public void remove(E e) {
+    public void remove(E elementData) {
         //TODO
+        count--;
     }
 
     @Override
-    public int indexOf(E element) {
+    public int indexOf(E elementData) {
         //TODO Реализовать!
         return 0;
     }
 
     @Override
-    public E get(int n) {
-        return item [n];
+    public Object get(int index) {
+        return item [index];
     }
 
     @Override
-    public void removeByIndex (int n) {
+    public void removeByIndex (int index) {
         //TODO остается дырка в виде null.
-        item[n] = null;
+        item[index] = null;
+        count--;
     }
 }

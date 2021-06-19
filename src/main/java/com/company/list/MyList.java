@@ -5,7 +5,7 @@ public interface MyList<E> {
     void addItemByIndex(int n, E e);
     int size();
     void remove(E e);
-    E get(int n);
+    Object get(int n);
     void removeByIndex(int n);
     int indexOf(E element);
 }

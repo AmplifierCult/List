@@ -5,39 +5,16 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        /*MyArrayList <String> list2 = new MyArrayList<>();
-        list2.addItem("one");
-        list2.addItem("two");
-        list2.addItem("three");
+        MyArrayList <String> list2 = new MyArrayList<>(3);
         System.out.println("Size list of ArrayList = " + list2.size());
-        System.out.println(list2.get(2));*/
+        MyArrayList <String> list1 = new MyArrayList<>();
+        System.out.println("Size list of ArrayList = " + list1.size());
+        list1.addItem("qwerty");
+        list1.addItem("qwe");
+        list1.addItem("qty");
+        list1.addItem("qwy");
+        System.out.println("Size list of ArrayList = " + list1.size());
+        System.out.println("Size item of ArrayList = " + list1.item.length);
 
-        MyLinkedList <Object> list = new MyLinkedList<>();
-        list.addItem("first");
-        list.addItem("second");
-        list.addItem(3);
-        list.addItem("fourth");
-        list.addItem(5);
-        list.addItem("sixth");
-        list.addItem("seventh");
-        System.out.println(list);
-        System.out.println(list.hashCode());
-
-
-        MyLinkedList <Object> list2 = new MyLinkedList<>();
-        list2.addItem("first");
-        list2.addItem("second");
-        list2.addItem(3);
-        list2.addItem("fourth");
-        list2.addItem(5);
-        list2.addItem("sixth");
-        list2.addItem("seventh");
-        System.out.println(list2);
-        System.out.println(list2.hashCode());
-        System.out.println(list2.equals(list));
-
-
-        MyLinkedList <Object> list3 = new MyLinkedList<>();
-        System.out.println(list3);
     }
 }
