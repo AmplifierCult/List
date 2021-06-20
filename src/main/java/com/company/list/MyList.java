@@ -8,12 +8,14 @@ public interface MyList<E> {
     Object get(int n);
     void removeByIndex(int n);
     int indexOf(E element);
-    default void validationIndex(int index) {
-        if (isEmpty()) {
-            throw new IllegalStateException("List is empty");
-        }
+    default void validationListPosition(int index) {
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException("Unsupported list position.");
+        }
+    }
+    default void validationListIsEmpty() {
+        if (isEmpty()) {
+            throw new IllegalStateException("List is empty.");
         }
     }
     default boolean isEmpty() {

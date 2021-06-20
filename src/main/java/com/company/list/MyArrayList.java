@@ -10,11 +10,7 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     public MyArrayList(int capacity) {
-        if (capacity >= 0) {
-            this.item = new Object[capacity];
-        } else {
-            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
-        }
+        validationCapacity(capacity);
     }
 
     private void increaseSize() {
@@ -23,6 +19,13 @@ public class MyArrayList<E> implements MyList<E> {
         System.arraycopy(temp, 0, item, 0, temp.length);
     }
 
+    private void validationCapacity(int capacity) {
+        if (capacity >= 0) {
+            this.item = new Object[capacity];
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
+        }
+    }
     @Override
     public void addItem(E elementData) {
         if (item.length == size()){
@@ -34,9 +37,7 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public void addItemByIndex(int index, E elementData) {
-        if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("Unsupported list position.");
-        }
+        validationListPosition(index);
         if (item.length == size()){
             increaseSize();
         }
@@ -52,10 +53,10 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public void remove(E elementData) {
+        validationListIsEmpty();
         int resultIndexOf = indexOf(elementData);
-        if (resultIndexOf != -1) {
-            removeByIndex(resultIndexOf);
-        }
+        validationListPosition(resultIndexOf);
+        removeByIndex(resultIndexOf);
     }
 
     @Override
@@ -73,13 +74,15 @@ public class MyArrayList<E> implements MyList<E> {
 
     @Override
     public Object get(int index) {
-        validationIndex(index);
+        validationListIsEmpty();
+        validationListPosition(index);
         return item [index];
     }
 
     @Override
     public void removeByIndex (int index) {
-        validationIndex(index);
+        validationListIsEmpty();
+        validationListPosition(index);
         System.arraycopy(item, index+1, item, index, item.length-index-1);
         size--;
     }

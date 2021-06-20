@@ -47,7 +47,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public Object get(int index) {
-        validationIndex(index);
+        validationListIsEmpty();
+        validationListPosition(index);
         Node currentNode = first;
         int currentIteration = 0;
         while (currentIteration <= index) {
@@ -65,7 +66,8 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void removeByIndex(int index) {
-        validationIndex(index);
+        validationListIsEmpty();
+        validationListPosition(index);
         Node currentNode = first;
         Node previousNode = first;
         int currentIteration = 0;
@@ -105,9 +107,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void addItemByIndex(int index, E elementData) {
-        if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("Unsupported list position.");
-        }
+        validationListPosition(index);
         Node newItem = new Node(elementData);
         Node currentNode = first;
         Node previousNode = first;
@@ -181,10 +181,7 @@ public class MyLinkedList<E> implements Iterable<E>, MyList<E> {
      */
     @Override
     public void remove(E elementData) {
-        if (isEmpty()) {
-            throw new IllegalStateException("Cannot remove from empty list.");
-        }
-
+        validationListIsEmpty();
         Node previousNode = first;
         Node currentNode = first;
         while (currentNode.next != null || currentNode == last) {

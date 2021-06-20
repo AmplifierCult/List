@@ -1,6 +1,7 @@
 package com.company.list;
 
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 import static org.junit.Assert.*;
 
@@ -405,5 +406,23 @@ public abstract class BaseListTests {
 
         //Then
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validationListPosition() {
+        //Given
+        MyList<Object> list = getEmptyList();
+
+        //Then
+        assertThrows(IndexOutOfBoundsException.class, ()-> list.validationListPosition(-1));
+    }
+
+    @Test
+    public void validationListIsEmpty() {
+        //Given
+        MyList<Object> list = getEmptyList();
+
+        //Then
+        assertThrows(IllegalStateException.class, list::validationListIsEmpty);
     }
 }

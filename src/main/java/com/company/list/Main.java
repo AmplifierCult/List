@@ -15,10 +15,11 @@ public class Main {
         list1.addItem("qwy");
         System.out.println(list1);
         list1.removeByIndex(1);
-        list1.removeByIndex(-1);
+        list1.removeByIndex(1);
         list1.removeByIndex(0);
         list1.removeByIndex(0);
-        System.out.println(list1);
-        list1.validationIndex(-1);
+        System.out.println(list1.getClass());
+        //list1.validationIndex(-1);
+
     }
 }
