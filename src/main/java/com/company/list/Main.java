@@ -1,5 +1,8 @@
 package com.company.list;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +22,22 @@ public class Main {
         list1.removeByIndex(0);
         list1.removeByIndex(0);
         System.out.println(list1.getClass());
-        //list1.validationIndex(-1);
-
+        HashMap <String, String> map = new HashMap<>();
+        /*map.size();
+        map.get();
+        map.clear();
+        map.equals();
+        map.remove();
+        map.clone();
+        map.containsKey();
+        map.containsValue();
+        map.entrySet();
+        map.isEmpty();
+        map.put();
+        map.replace();
+        map.keySet();
+        map.values();
+        map.hashCode();
+        map.toString();*/
     }
 }
