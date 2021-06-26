@@ -6,11 +6,12 @@ public class MyArrayList<E> implements MyList<E> {
     private int size;
 
     public MyArrayList() {
-        this.item = new Object[0];
+       this(0);
     }
 
     public MyArrayList(int capacity) {
         validationCapacity(capacity);
+        this.item = new Object[capacity];
     }
 
     private void increaseSize() {
@@ -20,12 +21,11 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     private void validationCapacity(int capacity) {
-        if (capacity >= 0) {
-            this.item = new Object[capacity];
-        } else {
+        if (capacity < 0) {
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
     }
+
     @Override
     public void addItem(E elementData) {
         if (item.length == size()){

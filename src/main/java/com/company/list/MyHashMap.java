@@ -41,24 +41,12 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
 
-    @Override
-    public boolean keySet() {
-        return false;
-    }
+
 
     @Override
-    public boolean value() {
-        return false;
-    }
-
-    @Override
-    public void cloneMap() {
-    }
-
-    @Override
-    public boolean remove() {
-        size--;
-        return false;
+    public V remove(K key) {
+        //size--;
+        throw new IllegalStateException("Not implemented yet.");
     }
 
     @Override
@@ -79,19 +67,16 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     @Override
-    public void replace(K key, V value) {
-
+    public V replace(K key, V value) {
+        throw new IllegalStateException("Not implemented yet.");
     }
 
     @Override
-    public boolean isEmpty(Object o) {
+    public boolean isEmpty() {
         return false;
     }
 
-    @Override
-    public Iterator<V> iterator() {
-        return null;
-    }
+
 
     private class Node<K, V> {
         private final MyList<Node> nodes;

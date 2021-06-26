@@ -1,13 +1,10 @@
 package com.company.list;
 
-public interface MyMap<K, V> extends Iterable<V> {
-    boolean keySet();
-    boolean value();
-    void cloneMap();
-    boolean remove();
-    Object get(K key);
+public interface MyMap<K, V> {
+    V remove(K key);
+    V get(K key);
     int size();
     void put(K key, V value);
-    void replace(K key, V value);
-    boolean isEmpty(Object o);
+    V replace(K key, V value);
+    boolean isEmpty(); // сделать дефолтным
 }
