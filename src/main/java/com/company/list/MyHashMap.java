@@ -30,7 +30,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
 
     public MyHashMap() {
-        hashTable = new Node[16];
+        hashTable = new MyHashMap.Node[16];
         threshold = hashTable.length * 0.75f;
     }
 
@@ -78,8 +78,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
 
 
-    private class Node<K, V> {
-        private final MyList<Node> nodes;
+    private class Node {
+        private final MyList<Node> nodes; //нужно только на уровне hashMap
         private int hash;
         private final K key;
         private V value;
@@ -120,7 +120,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o instanceof Node) {
+            if (o instanceof MyHashMap.Node) {
                 Node node = (Node) o;
                 return (Objects.equals(key, node.getKey()) &&
                         Objects.equals(value, node.getValue()) ||
