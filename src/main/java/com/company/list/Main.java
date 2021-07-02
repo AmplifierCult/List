@@ -39,5 +39,9 @@ public class Main {
         map.values();
         map.hashCode();
         map.toString();*/
+
+        MyMap<String, String> map2 = new MyTreeMap<>();
+        map2.put("key", "asd");
+        System.out.println(map2);
     }
 }

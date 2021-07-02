@@ -60,10 +60,11 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
     @Override
-    public void put(K key, V value) {
+    public V put(K key, V value) {
         Node node = new Node(key, value);
         int index = node.hash();
         size++;
+        return null;
     }
 
     @Override
