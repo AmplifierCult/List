@@ -1,8 +1,5 @@
 package com.company.list;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -22,26 +19,8 @@ public class Main {
         list1.removeByIndex(0);
         list1.removeByIndex(0);
         System.out.println(list1.getClass());
-        HashMap <String, String> map = new HashMap<>();
-        /*map.size();
-        map.get();
-        map.clear();
-        map.equals();
-        map.remove();
-        map.clone();
-        map.containsKey();
-        map.containsValue();
-        map.entrySet();
-        map.isEmpty();
-        map.put();
-        map.replace();
-        map.keySet();
-        map.values();
-        map.hashCode();
-        map.toString();*/
-
-        MyMap<String, String> map2 = new MyTreeMap<>();
-        map2.put("key", "asd");
-        System.out.println(map2);
+        Integer one = 1;
+        Integer four = 4;
+        System.out.println(four.compareTo(one));
     }
 }

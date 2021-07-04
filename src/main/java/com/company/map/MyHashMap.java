@@ -1,6 +1,8 @@
-package com.company.list;
+package com.company.map;
 
-import java.util.Iterator;
+import com.company.list.MyLinkedList;
+import com.company.list.MyList;
+
 import java.util.Objects;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
@@ -41,6 +43,10 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     }
 
 
+    @Override
+    public boolean containsKey(K key) {
+        return false;
+    }
 
 
     @Override

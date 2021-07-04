@@ -1,4 +1,4 @@
-package com.company.list;
+package com.company.map;
 
 public class MyTreeMapTests extends BaseMapTests {
     @Override
