@@ -18,7 +18,7 @@ public abstract class BaseMapTests {
         map.put(4, "two");
 
         //Then
-        assertEquals("asd", map.get(1));
+        assertEquals("one", map.get(1));
         assertEquals(2, map.size());
     }
 
