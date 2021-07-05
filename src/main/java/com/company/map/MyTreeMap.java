@@ -13,19 +13,19 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
 
 
     /**
-     * Метод remove() удаляет объект с ключом k. Возвращает предыдущее значение,
+     * Метод remove() удаляет объект с ключом key. Возвращает предыдущее значение,
      * связанное с указанным ключом.
      * Если такой сопоставленный ключ не отображается, он возвращает null.
      */
     @Override
     public V remove(K key) {
         validateKeyIsNull(key);
-        if (isEmpty()) {
+        if (isEmpty() || root.key == null) {
             throw new NullPointerException("Map is empty");
         }
 
         // если удаляем root
-        if (root.key == key) {
+        if (root.key.equals(key)) {
             V removedValue = root.value;
             removeRoot();
             size--;
@@ -62,19 +62,21 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
     }
 
     private void removeRoot() {
-        //  Если у узла нет дочерних элементов, мы просто удаляем этот узел.
+        //  Если у root нет дочерних элементов, мы просто удаляем этот узел.
         if (root.leafLeft.key == null && root.leafRight.key == null) {
             root = null;
 
-            // Если у узла только один дочерний узел (левый), то мы удаляем узел, и создаем связь
-            // между его дочерним и родительским элементами.
+            // Если у root только один дочерний узел (левый), то мы присваиваем root
+            // ссылку на этот дочерний элемент.
         } else if (root.leafLeft.key != null && root.leafRight.key == null) {
             root = root.leafLeft;
+            root.parent = null;
 
-            // Если у узла только один дочерний узел (правый), то мы удаляем узел, и создаем связь
-            // между его дочерним и родительским элементами.
+            // Если у узла только один дочерний узел (правый), то мы присваиваем root
+            // ссылку на этот дочерний элемент.
         } else if (root.leafLeft.key == null) {
             root = root.leafRight;
+            root.parent = null;
 
             // Если у узла два дочерних элемента. Мы находим следующий за ним по возрастанию узел,
             // у которого нет левого дочернего узла.
@@ -121,14 +123,19 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
     }
 
     private void swapLinkParent(Node replaceableLink, Node replacementLink) {
-        if (replaceableLink.parent.leafRight == replaceableLink) {
+        if (replaceableLink.branchName.equals("Right")) {
             replaceableLink.parent.leafRight = replacementLink;
-        } else replaceableLink.parent.leafLeft = replacementLink;
+        } else {
+            replaceableLink.parent.leafLeft = replacementLink;
+        }
+        replacementLink.parent = replaceableLink.parent;
     }
 
     private void swapLinkChild(Node replaceableLink, Node replacementLink) {
         replacementLink.leafLeft = replaceableLink.leafLeft;
+        replacementLink.leafLeft.parent = replacementLink;
         replacementLink.leafRight = replaceableLink.leafRight;
+        replacementLink.leafRight = replacementLink;
     }
 
     private void swapAllLink(Node replaceableLink, Node replacementLink) {
@@ -137,16 +144,26 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
     }
 
     private Node searchNextElement(Node currentElement) {
-        Node nextElement = currentElement.leafRight;
-        while (nextElement.leafLeft != null) {
-            nextElement = nextElement.leafLeft;
-        }
-        return nextElement;
+        Node nextElement;
+        if (currentElement.leafRight.key != null) {
+            nextElement = currentElement.leafRight;
+            while (nextElement.leafLeft.key != null) {
+                nextElement = nextElement.leafLeft;
+            }
+            return nextElement;
+        } else if (currentElement.parent != null) {
+            nextElement = currentElement.parent;
+
+            while(currentElement.key.compareTo(nextElement.key) > 0) {
+                nextElement = nextElement.parent;
+            }
+            return nextElement;
+        } else return currentElement;
     }
 
     /**
-     * Метод get() возвращает значение объекта, ключ которого равен k.
-     * Если такого элемента не окажется, то возвращается значение null
+     * Метод get() возвращает значение объекта, ключ которого равен key.
+     * Если такого элемента не окажется, то возвращается значение null.
      */
     @Override
     public V get(K key) {
@@ -157,15 +174,18 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         return searchPlaceForElement(key).value;
     }
 
+    /**
+     * Метод size() возвращает количество элементов TreeMap.
+     */
     @Override
     public int size() {
         return size;
     }
 
     /**
-     * Метод put() помещает в коллекцию новый объект с ключом k и значением v.
+     * Метод put() помещает в коллекцию новый объект с ключом key и значением value.
      * Если в коллекции уже есть объект с подобным ключом, то он перезаписывается.
-     * После добавления возвращает предыдущее значение для ключа k, если он уже был в коллекции.
+     * После добавления возвращает предыдущее значение для ключа key, если он уже был в коллекции.
      * Если же ключа еще не было в коллекции, то возвращается значение null.
      */
     @Override
@@ -190,7 +210,7 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         return null;
     }
 
-    public void initializeLeaf(Node parent) {
+    private void initializeLeaf(Node parent) {
         parent.leafLeft.parent = parent;
         parent.leafLeft.branchName = "Left";
         parent.leafRight.parent = parent;
@@ -232,9 +252,15 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         return currentNode;
     }
 
+    /**
+     * Метод containsKey() возвращает true если в TreeMap есть указанный ключ key.
+     */
     @Override
     public boolean containsKey(K key) {
-        return searchPlaceForElement(key).key == key;
+        K searchedKey = searchPlaceForElement(key).key;
+        if (searchedKey != null) {
+            return searchedKey.equals(key);
+        } else return false;
     }
 
     private class Node {
@@ -265,14 +291,60 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
             this.key = null;
             this.value = null;
             this.parent = null;
+            this.branchName = null;
         }
     }
 
     @Override
     // TODO реализовать toString.
     public String toString() {
+        if (isEmpty()) {
+            return "Map is empty";
+        }
+        int level = 1;
+        K parentKey;
+        Node currentElement = this.minElement();
+        StringBuilder elementMap = new StringBuilder();
+        for (int i = 0; i != size(); i++) {
+            if (isRoot(currentElement)) {
+                elementMap.append("RootTreeMap ");
+                parentKey = null;
+            } else {
+                elementMap.append("ElementTreeMap level ");
+                elementMap.append(level);
+                elementMap.append(" ");
+                parentKey = currentElement.parent.key;
+            }
+            elementMap.append("[key = ");
+            elementMap.append(currentElement.key);
+            elementMap.append(", value = ");
+            elementMap.append(currentElement.value);
+            elementMap.append(", branchName = ");
+            elementMap.append(currentElement.branchName);
+            elementMap.append(", parent.key = ");
+            elementMap.append(parentKey);
+            elementMap.append(", leafLeft.key = ");
+            elementMap.append(currentElement.leafLeft.key);
+            elementMap.append(", leafRight.key = ");
+            elementMap.append(currentElement.leafRight.key);
+            elementMap.append("]\n");
+            currentElement = searchNextElement(currentElement);
+        }
+        return elementMap.toString();
+    }
 
+    private Node minElement() {
+        if (isEmpty() || root.key == null) {
+            throw new NullPointerException();
+        }
+        Node minElement = root;
+        while (minElement.leafLeft.key != null) {
+            minElement = minElement.leafLeft;
+        }
+        return minElement;
+    }
 
-        return null;
+    private boolean isRoot(Node currentNode) {
+        return  currentNode.equals(root);
     }
 }

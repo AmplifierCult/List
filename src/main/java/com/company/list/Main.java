@@ -1,5 +1,8 @@
 package com.company.list;
 
+import com.company.map.MyMap;
+import com.company.map.MyTreeMap;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -22,5 +25,14 @@ public class Main {
         Integer one = 1;
         Integer four = 4;
         System.out.println(four.compareTo(one));
+
+        MyMap<String, String> map = new MyTreeMap<>();
+        map.put("2", "one");
+        map.put("4", "two");
+        map.put("3", "three");
+        map.put("a", "four");
+        map.put("10", "five");
+        map.put("b", "six");
+        System.out.println(map);
     }
 }
