@@ -290,4 +290,43 @@ public abstract class BaseMapTests {
         //Then
         assertNull(actual);
     }
+
+    @Test
+    public void heapObjectsKeys() {
+        MyMap<Long, String> map = getEmptyMap();
+        map.put(1L, "one");
+        map.put(4L, "two");
+        map.put(3L, "three");
+        map.put(5L, "four");
+        map.put(10L, "five");
+        map.put(7L, "six");
+        map.put(8L, "eight");
+
+        assertEquals(7, map.size());
+
+        map.remove(5L);
+        assertEquals(6, map.size());
+        assertFalse(map.containsKey(5L));
+
+        map.remove(1L);
+        assertEquals(5, map.size());
+        assertFalse(map.containsKey(1L));
+
+        map.put(6L, "six");
+        assertEquals(6, map.size());
+        assertTrue(map.containsKey(6L));
+
+        map.put(1L, "one");
+        assertEquals(7, map.size());
+        assertTrue(map.containsKey(new Long(1)));
+
+        map.remove(new Long(10));
+        assertEquals(6, map.size());
+        assertFalse(map.containsKey(new Long(10)));
+
+        Long[] containedKeys = new Long[] {1L, 3L, 4L, 6L, 7L, 8L};
+        for (Long containedKey : containedKeys) {
+            assertTrue(map.containsKey(containedKey));
+        }
+    }
 }
