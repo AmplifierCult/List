@@ -26,13 +26,16 @@ public class Main {
         Integer four = 4;
         System.out.println(four.compareTo(one));
 
-        MyMap<String, String> map = new MyTreeMap<>();
-        map.put("2", "one");
-        map.put("4", "two");
-        map.put("3", "three");
-        map.put("a", "four");
-        map.put("10", "five");
-        map.put("b", "six");
+        MyMap<Float, String> map = new MyTreeMap<>();
+        map.put(5.0f, "one");
+        map.put(4.13f, "two");
+        map.put(6.05f, "three");
+        map.put(7.0f, "four");
+        map.put(2.53f, "five");
+        map.put(1.75f, "six");
+        System.out.println(map);
+
+        map.remove(5.0f);
         System.out.println(map);
     }
 }

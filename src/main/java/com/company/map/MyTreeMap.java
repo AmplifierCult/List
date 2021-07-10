@@ -10,8 +10,6 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         this.size = 0;
     }
 
-
-
     /**
      * Метод remove() удаляет объект с ключом key. Возвращает предыдущее значение,
      * связанное с указанным ключом.
@@ -92,6 +90,7 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
 
             // ставим nextElement на место удаляемого элемента
             swapLinkChild(root, nextElement);
+            root = nextElement;
         }
     }
 
@@ -135,7 +134,7 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         replacementLink.leafLeft = replaceableLink.leafLeft;
         replacementLink.leafLeft.parent = replacementLink;
         replacementLink.leafRight = replaceableLink.leafRight;
-        replacementLink.leafRight = replacementLink;
+        replacementLink.leafRight.parent = replacementLink;
     }
 
     private void swapAllLink(Node replaceableLink, Node replacementLink) {
@@ -153,9 +152,17 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
             return nextElement;
         } else if (currentElement.parent != null) {
             nextElement = currentElement.parent;
-
+            if (currentElement.key == null || nextElement.key == null) {
+                throw new NullPointerException();
+            }
             while(currentElement.key.compareTo(nextElement.key) > 0) {
+                if (nextElement.parent == null) {
+                    return nextElement;
+                }
                 nextElement = nextElement.parent;
+                if (nextElement.key == null) {
+                    throw new NullPointerException();
+                }
             }
             return nextElement;
         } else return currentElement;
@@ -229,7 +236,7 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
             V replacedValue = searchedElement.value;
             searchedElement.value = value;
             return replacedValue;
-        } else return null;
+        } else return put(key, value);
     }
 
     private void validateKeyIsNull(K key) {
@@ -296,22 +303,22 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
     }
 
     @Override
-    // TODO реализовать toString.
     public String toString() {
         if (isEmpty()) {
             return "Map is empty";
         }
-        int level = 1;
         K parentKey;
         Node currentElement = this.minElement();
         StringBuilder elementMap = new StringBuilder();
         for (int i = 0; i != size(); i++) {
             if (isRoot(currentElement)) {
-                elementMap.append("RootTreeMap ");
+                elementMap.append("RootTreeMap    level ");
+                elementMap.append("0");
+                elementMap.append(" ");
                 parentKey = null;
             } else {
                 elementMap.append("ElementTreeMap level ");
-                elementMap.append(level);
+                elementMap.append(getLevel(currentElement));
                 elementMap.append(" ");
                 parentKey = currentElement.parent.key;
             }
@@ -346,5 +353,14 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
 
     private boolean isRoot(Node currentNode) {
         return  currentNode.equals(root);
+    }
+
+    private int getLevel(Node currentElement) {
+        int level = 0;
+        while(currentElement != root){
+            currentElement = currentElement.parent;
+            level++;
+        }
+        return level;
     }
 }
