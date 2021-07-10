@@ -5,7 +5,7 @@ import com.company.list.MyList;
 
 import java.util.Objects;
 
-public class MyHashMap<K, V> implements MyMap<K, V> {
+public class MyHashMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     /**
      * Количество элементов HashMap.
      */
@@ -83,6 +83,10 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return false;
     }
 
+    @Override
+    public MyList<MyNode<K, V>> getEntries() {
+        throw new IllegalStateException();
+    }
 
 
     private class Node {

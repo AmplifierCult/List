@@ -1,6 +1,8 @@
 package com.company.map;
 
-public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
+import com.company.list.MyList;
+
+public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMap<K, V>{
 
     private int size;
     private Node root;
@@ -270,6 +272,11 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
         } else return false;
     }
 
+    @Override
+    public MyList<MyNode<K, V>> getEntries() {
+        throw new IllegalStateException();
+    }
+
     private class Node {
         private final K key;
         private V value;
@@ -301,6 +308,8 @@ public class MyTreeMap<K extends Comparable<K>, V> implements MyMap<K, V>{
             this.branchName = null;
         }
     }
+
+    // TODO реализовать equals и hashCode
 
     @Override
     public String toString() {
