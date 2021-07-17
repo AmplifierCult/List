@@ -1,13 +1,15 @@
 package com.company.map;
 
-import com.company.list.MyList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMap<K, V>{
+public class MyTreeMyMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
 
     private int size;
     private Node root;
 
-    public MyTreeMap() {
+    public MyTreeMyMap() {
         this.root = null;
         this.size = 0;
     }
@@ -273,11 +275,17 @@ public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMap<K, V>{
     }
 
     @Override
-    public MyList<MyNode<K, V>> getEntries() {
-        throw new IllegalStateException();
+    public Set<MyNode<K, V>> getEntries() {
+        Set<MyNode<K, V>> set = new HashSet<>();
+        Node currentElement = this.minElement();
+        for (int i = 0; i != size(); i++) {
+            set.add(currentElement);
+            currentElement = searchNextElement(currentElement);
+        }
+        return set;
     }
 
-    private class Node {
+    private class Node implements MyNode<K, V>{
         private final K key;
         private V value;
         private String branchName;
@@ -307,9 +315,29 @@ public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMap<K, V>{
             this.parent = null;
             this.branchName = null;
         }
-    }
 
-    // TODO реализовать equals и hashCode
+        @Override
+        public K getKey() {
+            return this.key;
+        }
+
+        @Override
+        public V getValue() {
+            return this.value;
+        }
+
+        @Override
+        public final boolean equals(Object o) {
+            if (o == this)
+                return true;
+            if (o instanceof MyMap.MyNode) {
+                MyMap.MyNode<?,?> e = (MyMap.MyNode<?,?>)o;
+                return Objects.equals(key, e.getKey()) &&
+                        Objects.equals(value, e.getValue());
+            }
+            return false;
+        }
+    }
 
     @Override
     public String toString() {

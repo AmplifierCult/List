@@ -1,7 +1,7 @@
 package com.company.list;
 
 import com.company.map.MyMap;
-import com.company.map.MyTreeMap;
+import com.company.map.MyTreeMyMap;
 
 public class Main {
 
@@ -26,16 +26,30 @@ public class Main {
         Integer four = 4;
         System.out.println(four.compareTo(one));
 
-        MyMap<Float, String> map = new MyTreeMap<>();
-        map.put(5.0f, "one");
-        map.put(4.13f, "two");
-        map.put(6.05f, "three");
-        map.put(7.0f, "four");
-        map.put(2.53f, "five");
-        map.put(1.75f, "six");
-        System.out.println(map);
+        MyMap<Long, String> map1 = new MyTreeMyMap<>();
+        map1.put(1L, "one");
+        map1.put(4L, "two");
+        map1.put(3L, "three");
 
-        map.remove(5.0f);
-        System.out.println(map);
+        MyMap<Long, String> map2 = new MyTreeMyMap<>();
+        map2.put(1L, "one");
+        map2.put(4L, "two");
+        map2.put(3L, "three");
+
+        MyMap<Long, String> map3 = new MyTreeMyMap<>();
+        map3.put(1L, "one");
+        map3.put(4L, "two");
+        map3.put(5L, "three");
+
+        //When
+        boolean actual_1 = map1.equals(map2);
+        boolean actual_2 = map1.equals(map3);
+
+        System.out.println(actual_1);
+        System.out.println(actual_2);
+
+        System.out.println(map1.hashCode());
+        System.out.println(map2.hashCode());
+        System.out.println(map3.hashCode());
     }
 }

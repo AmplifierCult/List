@@ -1,6 +1,6 @@
 package com.company.map;
 
-import com.company.list.MyList;
+import java.util.Set;
 
 public interface MyMap<K, V> {
     V remove(K key);
@@ -12,10 +12,9 @@ public interface MyMap<K, V> {
     default boolean isEmpty() {
         return size() == 0;
     }
-    // TODO заменить MyList на Set
-    MyList<MyNode<K, V>> getEntries();
+    Set<MyNode<K, V>> getEntries();
 
-    public interface MyNode<K, V> {
+    interface MyNode<K, V> {
         K getKey();
         V getValue();
     }

@@ -4,8 +4,9 @@ import com.company.list.MyLinkedList;
 import com.company.list.MyList;
 
 import java.util.Objects;
+import java.util.Set;
 
-public class MyHashMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
+public class MyHashMyMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
     /**
      * Количество элементов HashMap.
      */
@@ -31,8 +32,8 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     private final float loadFactor = 0.75f;
 
 
-    public MyHashMap() {
-        hashTable = new MyHashMap.Node[16];
+    public MyHashMyMap() {
+        hashTable = new MyHashMyMap.Node[16];
         threshold = hashTable.length * 0.75f;
     }
 
@@ -84,7 +85,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
     }
 
     @Override
-    public MyList<MyNode<K, V>> getEntries() {
+    public Set<MyNode<K, V>> getEntries() {
         throw new IllegalStateException();
     }
 
@@ -131,7 +132,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMap<K, V> {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (o instanceof MyHashMap.Node) {
+            if (o instanceof MyHashMyMap.Node) {
                 Node node = (Node) o;
                 return (Objects.equals(key, node.getKey()) &&
                         Objects.equals(value, node.getValue()) ||

@@ -293,6 +293,7 @@ public abstract class BaseMapTests {
 
     @Test
     public void heapObjectsKeys() {
+        //Given
         MyMap<Long, String> map = getEmptyMap();
         map.put(1L, "one");
         map.put(4L, "two");
@@ -302,6 +303,7 @@ public abstract class BaseMapTests {
         map.put(7L, "six");
         map.put(8L, "eight");
 
+        //When
         assertEquals(7, map.size());
 
         map.remove(5L);
@@ -318,15 +320,43 @@ public abstract class BaseMapTests {
 
         map.put(1L, "one");
         assertEquals(7, map.size());
-        assertTrue(map.containsKey(new Long(1)));
+        assertTrue(map.containsKey(1L));
 
-        map.remove(new Long(10));
+        map.remove(1L);
         assertEquals(6, map.size());
-        assertFalse(map.containsKey(new Long(10)));
+        assertFalse(map.containsKey(1L));
 
+        //Then
         Long[] containedKeys = new Long[] {1L, 3L, 4L, 6L, 7L, 8L};
         for (Long containedKey : containedKeys) {
             assertTrue(map.containsKey(containedKey));
         }
+    }
+
+    @Test
+    public void equals() {
+        //Given
+        MyMap<Long, String> map1 = getEmptyMap();
+        map1.put(1L, "one");
+        map1.put(4L, "two");
+        map1.put(3L, "three");
+
+        MyMap<Long, String> map2 = getEmptyMap();
+        map2.put(1L, "one");
+        map2.put(4L, "two");
+        map2.put(3L, "three");
+
+        MyMap<Long, String> map3 = getEmptyMap();
+        map3.put(1L, "one");
+        map3.put(4L, "two");
+        map3.put(5L, "three");
+
+        //When
+        boolean actual_1 = map1.equals(map2);
+        boolean actual_2 = map1.equals(map3);
+
+        //Then
+        assertTrue(actual_1);
+        assertFalse(actual_2);
     }
 }
