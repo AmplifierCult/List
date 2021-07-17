@@ -337,6 +337,11 @@ public class MyTreeMyMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V>
             }
             return false;
         }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(key, value);
+        }
     }
 
     @Override
