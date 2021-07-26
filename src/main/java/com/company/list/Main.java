@@ -1,7 +1,7 @@
 package com.company.list;
 
 import com.company.map.MyMap;
-import com.company.map.MyTreeMyMap;
+import com.company.map.MyTreeMap;
 
 public class Main {
 
@@ -26,17 +26,17 @@ public class Main {
         Integer four = 4;
         System.out.println(four.compareTo(one));
 
-        MyMap<Long, String> map1 = new MyTreeMyMap<>();
+        MyMap<Long, String> map1 = new MyTreeMap<>();
         map1.put(1L, "one");
         map1.put(4L, "two");
         map1.put(3L, "three");
 
-        MyMap<Long, String> map2 = new MyTreeMyMap<>();
+        MyMap<Long, String> map2 = new MyTreeMap<>();
         map2.put(1L, "one");
         map2.put(4L, "two");
         map2.put(3L, "three");
 
-        MyMap<Long, String> map3 = new MyTreeMyMap<>();
+        MyMap<Long, String> map3 = new MyTreeMap<>();
         map3.put(1L, "one");
         map3.put(4L, "two");
         map3.put(5L, "three");

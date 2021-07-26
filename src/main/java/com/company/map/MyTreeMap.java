@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class MyTreeMyMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
+public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
 
     private int size;
     private Node root;
 
-    public MyTreeMyMap() {
+    public MyTreeMap() {
         this.root = null;
         this.size = 0;
     }
@@ -274,6 +274,9 @@ public class MyTreeMyMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V>
         } else return false;
     }
 
+    /**
+     * Метод getEntries() возвращает множество всех элементов HashMap
+     */
     @Override
     public Set<MyNode<K, V>> getEntries() {
         Set<MyNode<K, V>> set = new HashSet<>();

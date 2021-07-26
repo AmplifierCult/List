@@ -322,9 +322,9 @@ public abstract class BaseMapTests {
         assertEquals(7, map.size());
         assertTrue(map.containsKey(1L));
 
-        map.remove(1L);
+        map.remove(10L);
         assertEquals(6, map.size());
-        assertFalse(map.containsKey(1L));
+        assertFalse(map.containsKey(10L));
 
         //Then
         Long[] containedKeys = new Long[] {1L, 3L, 4L, 6L, 7L, 8L};
