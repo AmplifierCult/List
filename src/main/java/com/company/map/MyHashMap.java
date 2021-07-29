@@ -1,5 +1,6 @@
 package com.company.map;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.ArrayList;
@@ -33,18 +34,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         return arr;
     }
 
-    public int hash(final K key) {
-        validateKeyIsNull(key);
-        int hash = 31;
-        hash = hash * 17 + key.hashCode();
-        return hash % CAPACITY;
-    }
 
-    private void validateKeyIsNull(K key) {
-        if (key == null) {
-            throw new IllegalArgumentException("The key must not be null.");
-        }
-    }
 
     /**
      * Метод containsKey() возвращает true если в TreeMap есть указанный ключ key.
@@ -62,14 +52,18 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
      * связанное с указанным ключом.
      * Если такой сопоставленный ключ не отображается, он возвращает null.
      */
-    // TODO to realize remove
     @Override
     public V remove(K key) {
+        validateKeyIsNull(key);
+        if (isEmpty()) {
+            return null;
+        }
         if (containsKey(key)) {
             Node removedElement = getEqualsForKeyNodeBucket(getBucket(key), key);
-
+            V oldValue = removedElement.value;
+            hashTable.set(hash(key), null);
             size--;
-            return removedElement.value;
+            return oldValue;
 
         } else return null;
     }
@@ -99,6 +93,15 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
     }
 
     /**
+     * Метод replace() возвращает предыдущее значение, связанное с указанным ключом.
+     * Если такой сопоставленный ключ не отображается, он возвращает null.
+     */
+    @Override
+    public V replace(K key, V value) {
+        return put(key, value);
+    }
+
+    /**
      * Метод put() помещает в коллекцию новый объект с ключом key и значением value.
      * Если в коллекции уже есть объект с подобным ключом, то он перезаписывается.
      * После добавления возвращает предыдущее значение для ключа key, если он уже был в коллекции.
@@ -113,7 +116,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         // Если искомая корзина пуста, создаем новый узел
         if (bucket == null) {
             bucket = new Node(key, value);
-            hashTable.add(index, bucket);
+            hashTable.set(index, bucket);
             size++;
             return null;
         }
@@ -139,23 +142,23 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
 
     private boolean containsKeyInBucket(Node firstNodeInBucket, K key) {
         Node currentNode = firstNodeInBucket;
-        do {
+        while (currentNode != null) {
             if (currentNode.key.equals(key)) {
                 return true;
             }
             currentNode = currentNode.nextElement;
-        } while (currentNode.nextElement != null);
+        }
         return false;
     }
 
     private Node getEqualsForKeyNodeBucket(Node firstNodeInBucket, K key) {
         Node currentNode = firstNodeInBucket;
-        do {
+        while (currentNode != null) {
             if (currentNode.key.equals(key)) {
                 return currentNode;
             }
             currentNode = currentNode.nextElement;
-        } while (currentNode.nextElement != null);
+        }
         throw new IllegalStateException();
     }
 
@@ -171,24 +174,36 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         return hashTable.get(hash(key));
     }
 
-    /**
-     * Метод replace() возвращает предыдущее значение, связанное с указанным ключом.
-     * Если такой сопоставленный ключ не отображается, он возвращает null.
-     */
-    // TODO to realize replace
-    @Override
-    public V replace(K key, V value) {
+    public int hash(final K key) {
         validateKeyIsNull(key);
-        throw new IllegalStateException("Not implemented yet.");
+        int hash = 31;
+        hash = hash * 17 + key.hashCode();
+        return hash % CAPACITY;
+    }
+
+    private void validateKeyIsNull(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("The key must not be null.");
+        }
     }
 
     /**
      * Метод getEntries() возвращает множество всех элементов HashMap
      */
-    // TODO to realize getEntries
     @Override
     public Set<MyNode<K, V>> getEntries() {
-        throw new IllegalStateException();
+        Set<MyNode<K, V>> set = new HashSet<>();
+        Node currentElement;
+        for (int i = 0; i < CAPACITY; i++) {
+            currentElement = hashTable.get(i);
+            if (currentElement != null) {
+                while (currentElement != null) {
+                    set.add(currentElement);
+                    currentElement = currentElement.nextElement;
+                }
+            }
+        }
+        return set;
     }
 
 
