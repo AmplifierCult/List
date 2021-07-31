@@ -17,6 +17,5 @@ public interface MyMap<K, V> {
     interface MyNode<K, V> {
         K getKey();
         V getValue();
-        int getHash();
     }
 }

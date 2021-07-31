@@ -42,7 +42,9 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
     @Override
     public boolean containsKey(K key) {
         validateKeyIsNull(key);
-        isEmpty();
+        if (isEmpty()) {
+            return false;
+        }
         Node bucket = getBucket(key);
         return containsKeyInBucket(bucket, key);
     }
@@ -65,7 +67,9 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
             size--;
             return oldValue;
 
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -81,7 +85,9 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         Node bucket = getBucket(key);
         if (containsKeyInBucket(bucket, key)) {
             return getEqualsForKeyNodeBucket(bucket, key).value;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -159,6 +165,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         return set;
     }
 
+    // TODO Перенести и сделать методом класса Node. Так код станет более читаемым.
     private boolean containsKeyInBucket(Node firstNodeInBucket, K key) {
         Node currentNode = firstNodeInBucket;
         while (currentNode != null) {
@@ -170,6 +177,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         return false;
     }
 
+    // TODO Перенести и сделать методом класса Node. Так код станет более читаемым.
     private Node getEqualsForKeyNodeBucket(Node firstNodeInBucket, K key) {
         Node currentNode = firstNodeInBucket;
         while (currentNode != null) {
@@ -181,6 +189,7 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         throw new IllegalStateException();
     }
 
+    // TODO Перенести и сделать методом класса Node. Так код станет более читаемым.
     private Node getLastNodeBucket(Node firstNodeInBucket) {
         Node currentNode = firstNodeInBucket;
         while (currentNode.nextElement != null) {
@@ -215,11 +224,12 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         StringBuilder elementMap = new StringBuilder();
         int index = 1;
         for (MyNode<K, V> node : set) {
+            Node castedNode = (Node) node;
             elementMap.append("ElementHashMap ");
             elementMap.append(index);
             elementMap.append(" [");
             elementMap.append("hash = ");
-            elementMap.append(node.getHash());
+            elementMap.append(castedNode.hash);
             elementMap.append(", key = ");
             elementMap.append(node.getKey());
             elementMap.append(", value = ");
@@ -245,11 +255,6 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
 
         private int hash() {
             return hashCode() % CAPACITY;
-        }
-
-        @Override
-        public int getHash() {
-            return this.hash;
         }
 
         @Override
