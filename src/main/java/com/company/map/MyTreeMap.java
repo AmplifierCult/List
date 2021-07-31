@@ -330,6 +330,11 @@ public class MyTreeMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         }
 
         @Override
+        public int getHash() {
+            return hashCode();
+        }
+
+        @Override
         public final boolean equals(Object o) {
             if (o == this)
                 return true;

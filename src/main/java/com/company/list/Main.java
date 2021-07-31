@@ -1,5 +1,6 @@
 package com.company.list;
 
+import com.company.map.MyHashMap;
 import com.company.map.MyMap;
 import com.company.map.MyTreeMap;
 
@@ -51,5 +52,15 @@ public class Main {
         System.out.println(map1.hashCode());
         System.out.println(map2.hashCode());
         System.out.println(map3.hashCode());
+
+        MyMap<Integer, String> map5 = new MyHashMap<>();
+        map5.put(1, "one");
+        map5.put(4, "two");
+        map5.put(3, "three");
+        map5.put(5, "four");
+        map5.put(10, "five");
+        map5.put(7, "six");
+        System.out.println(map5);
+
     }
 }

@@ -140,6 +140,25 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         }
     }
 
+    /**
+     * Метод getEntries() возвращает множество всех элементов HashMap
+     */
+    @Override
+    public Set<MyNode<K, V>> getEntries() {
+        Set<MyNode<K, V>> set = new HashSet<>();
+        Node currentElement;
+        for (int i = 0; i < CAPACITY; i++) {
+            currentElement = hashTable.get(i);
+            if (currentElement != null) {
+                while (currentElement != null) {
+                    set.add(currentElement);
+                    currentElement = currentElement.nextElement;
+                }
+            }
+        }
+        return set;
+    }
+
     private boolean containsKeyInBucket(Node firstNodeInBucket, K key) {
         Node currentNode = firstNodeInBucket;
         while (currentNode != null) {
@@ -187,25 +206,29 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         }
     }
 
-    /**
-     * Метод getEntries() возвращает множество всех элементов HashMap
-     */
     @Override
-    public Set<MyNode<K, V>> getEntries() {
-        Set<MyNode<K, V>> set = new HashSet<>();
-        Node currentElement;
-        for (int i = 0; i < CAPACITY; i++) {
-            currentElement = hashTable.get(i);
-            if (currentElement != null) {
-                while (currentElement != null) {
-                    set.add(currentElement);
-                    currentElement = currentElement.nextElement;
-                }
-            }
+    public String toString() {
+        if (isEmpty()) {
+            return "Map is empty";
         }
-        return set;
+        Set<MyNode<K, V>> set = getEntries();
+        StringBuilder elementMap = new StringBuilder();
+        int index = 1;
+        for (MyNode<K, V> node : set) {
+            elementMap.append("ElementHashMap ");
+            elementMap.append(index);
+            elementMap.append(" [");
+            elementMap.append("hash = ");
+            elementMap.append(node.getHash());
+            elementMap.append(", key = ");
+            elementMap.append(node.getKey());
+            elementMap.append(", value = ");
+            elementMap.append(node.getValue());
+            elementMap.append("]\n");
+            index++;
+        }
+        return elementMap.toString();
     }
-
 
     private class Node implements MyNode<K, V> {
         private int hash;
@@ -222,6 +245,11 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
 
         private int hash() {
             return hashCode() % CAPACITY;
+        }
+
+        @Override
+        public int getHash() {
+            return this.hash;
         }
 
         @Override
