@@ -60,16 +60,43 @@ public class MyHashMap<K extends Comparable<K>, V> extends AbstractMyMap<K, V> {
         if (isEmpty()) {
             return null;
         }
-        if (containsKey(key)) {
-            Node removedElement = getEqualsForKeyNodeBucket(getBucket(key), key);
+
+        if (!containsKey(key)) {
+            return null;
+        }
+
+        Node bucket = getBucket(key);
+        Node removedElement = getEqualsForKeyNodeBucket(bucket, key);
+
+        if (bucket.equals(removedElement) && bucket.nextElement == null) {
             V oldValue = removedElement.value;
             hashTable.set(hash(key), null);
             size--;
             return oldValue;
-
-        } else {
-            return null;
         }
+
+        Node parent = getParentNode(bucket, removedElement);
+        V oldValue = removedElement.value;
+        if (removedElement.nextElement == null) {
+            parent.nextElement = null;
+        } else {
+            parent.nextElement = removedElement.nextElement;
+        }
+        size--;
+        return oldValue;
+    }
+
+    private Node getParentNode (Node firstNodeInBucket, Node childNode) {
+        Node parentNode = firstNodeInBucket;
+        Node currentNode = firstNodeInBucket;
+        while (currentNode != null) {
+            if (currentNode.equals(childNode)) {
+                return parentNode;
+            }
+            parentNode = currentNode;
+            currentNode = currentNode.nextElement;
+        }
+        return parentNode;
     }
 
     /**
